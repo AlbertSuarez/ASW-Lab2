@@ -34,7 +34,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
 		
 	case 'DELETE':
 	   
-	    // To be implemented (See Task #5)
+	    	// To be implemented (See Task #5)
+		$twid = $_GET['twid'];
+		$deleteRes = $dbhandler->deleteTweet($twid);
+		$aux = 'success';
+		if ($deleteRes == 0) $aux = 'fail';	
+		echo '<?xml version="1.0"?><response><deletion tweetid="', $twid, '">', $aux, '</deletion></response>';
 		
 		exit;
 		
