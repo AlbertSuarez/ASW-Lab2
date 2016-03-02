@@ -16,12 +16,16 @@ $resp->channel->addChild('description', 'RSS 2.0 feed that retrieves the tweets 
 $res = $dbhandler->getTweets();
 foreach($res as $tweet) {
 	$item = $resp->channel->addChild('item');
+	$id = $tweet['id'];
+	$author = '<i>' . '<b>' . $tweet['author'] . '</b>' . '</i>';
+	$likes = '<b>' . $tweet['likes'] . '</b>';
  	$item->addChild('title', $tweet['text']);
 	$item->addChild('link', 'http://localhost:8080/waslab02/wall.php#item_'.$tweet['id']);
-	$description = 'This is WoT tweet #', $tweet['id'], ' posted by ', $tweet['author'], '. It has been liked by ', $tweet['likes'], 'people.';
-	$item->addChild('description', $description);
+	$item->addChild('description', "This is WoT tweet #$id posted by $author. It has been liked by $likes people.".PHP_EOL);
 	$item->addChild('pubDate',date(DATE_W3C,$tweet['time']));
 }
+
+//This is WoT tweet #{$tweet->id} posted by {$tweet->author}. It has been liked by {$tweet->likes} people.
 
 header('Content-type: text/xml');
 echo $resp->asXML();
